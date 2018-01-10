@@ -1,0 +1,221 @@
+<section>
+  <br />
+  <form name="vm.form.subjectForm" class="form-horizontal" ng-submit="vm.saveConfigDetails(vm.form.subjectForm.$valid)" novalidate>
+     <wizard on-finish="vm.saveConfigDetails(vm.form.subjectForm.$valid)" indicators-position="top"> 
+         <wz-step wz-title="Syllabus">
+                <br />
+                <br />                
+                <textarea name="syllabus" id="syllabus" class="form-control" ng-model="vm.subject.syllabus" 
+                rows="20" required="required" placeholder="Syllabus"></textarea>
+                <input type="submit" class="btn btn-default form-control input-sm" wz-next value="Next" ng-disabled="vm.form.subjectForm.syllabus.$invalid"/>
+         </wz-step>
+        <wz-step wz-title="CO">
+            <br />
+            <br />
+            
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">CO#</th>
+                        <th class="col-md-10">Description
+                             <span><button class="btn btn-primary btn-xs pull-right" ng-click="vm.addNewCO()">
+                                 <span class="glyphicon glyphicon-plus"></span></button>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="co in vm.subject.cos">
+                        <td>{{ co.code }}</td>
+                        <td>                            
+                            <textarea name="description" id="description" ng-model="co.description" 
+                            class="form-control input-sm" rows="3" required="required">
+                            </textarea>                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>            
+            <input type="submit" class="btn btn-default form-control input-sm" wz-next value="Next" ng-disabled="vm.form.subjectForm.$invalid"/>
+        </wz-step>
+        <wz-step wz-title="CO-PO">
+            <br />
+            <br />
+            <table class="table table-hover table-striped table-condensed" style="text-align: center">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">CO#</th>
+                        <th style="text-align: center" ng-repeat="po in vm.posList">
+                             <span uib-tooltip="{{vm.pos[po]}}" tooltip-placement="bottom">
+                                {{ po }}
+                            </span>                            
+                        </th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="co in vm.subject.cos">
+                        <td><strong>
+                             <span uib-tooltip="{{co.description}}" tooltip-placement="right">
+                                 {{co.code}}
+                             </span>
+                            </strong>
+                        </td>
+                        <td ng-repeat="po in vm.posList">
+                            <input type="text" ng-model="co.pos[po]" class="form-control input-sm" 
+                             ng-change="vm.validateRange(po,co.pos)"
+                            style="text-align: center" uib-tooltip="{{vm.pos[po]}}" tooltip-placement="bottom"/>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>{{vm.subject.subjectCode}}</strong></td>
+                        <td style="text-align: center" ng-repeat="po in vm.posList">
+                            <strong>{{ vm.aggregateOfPOs(po) }}</strong>
+                        </td>                      
+                    </tr>
+                </tfoot>
+            </table>
+            <input type="submit" class="btn btn-default form-control input-sm" wz-next value="Next" />
+        </wz-step>
+        <wz-step wz-title="CO-PSO">
+            <br />
+            <br />
+            <table class="table table-hover table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>CO#</th>
+                        <th style="text-align: center" ng-repeat="pso in vm.psosList">
+                            <span uib-tooltip="{{vm.psos[pso]}}" tooltip-placement="bottom">
+                                {{ pso }}
+                            </span>                           
+                        </th>                      
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="co in vm.subject.cos">
+                         <td><strong>
+                             <span uib-tooltip="{{co.description}}" tooltip-placement="right">
+                                 {{co.code}}
+                             </span>
+                            </strong>
+                        </td>
+                        <td ng-repeat="pso in vm.psosList">
+                            <input type="number" ng-model="co.psos[pso]" class="form-control input-sm"
+                                  ng-change="vm.validateRange(pso, co.psos)"
+                                  style="text-align: center"  uib-tooltip="{{vm.psos[pso]}}" tooltip-placement="bottom"/>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>{{ vm.subject.subjectCode }}</strong></td>
+                        <td style="text-align: center" ng-repeat="pso in vm.psosList">
+                            <strong>{{ vm.aggregateOfPSOs(pso)}} </strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <input type="submit" class="btn btn-default form-control input-sm" wz-next value="Next" />
+        </wz-step>
+        <wz-step wz-title="Attainment Level">
+            <br />
+            <br />
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Attainment Weightage
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                            Internal
+                        </div>
+                        <div class="col-md-1">
+                            <input type="text" ng-model="vm.subject.attainment.weightage.ia" 
+                            class="input-sm" style="width:40px" ng-change="vm.calculateExternalPct()"/>%
+                        </div>
+                         <div class="col-md-1">
+                            External
+                        </div>
+                        <div class="col-md-1">
+                            <input type="text" readonly 
+                            ng-model="vm.subject.attainment.weightage.ea" class="input-sm" style="width:40px" />%
+                        </div>
+                    </div>            
+                </div>
+            </div>
+
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    IA Attainment Level
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <strong> Level 1: </strong>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" ng-change="vm.validPctRange('stds_pct', vm.subject.attainment.iaLevels[0])" ng-model="vm.subject.attainment.iaLevels[0].stds_pct" class="input-sm" 
+                            style="width:40px"/>% of students score more than <input type="text" ng-change="vm.validPctRange('marks_pct', vm.subject.attainment.iaLevels[0])" ng-model="vm.subject.attainment.iaLevels[0].marks_pct" class="input-sm" style="width:40px"/>% marks out of the maximum relevant marks.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <strong>  Level 2:</strong>
+                        </div>
+                        <div class="col-md-6">
+                             <input type="text" ng-change="vm.validPctRange('stds_pct', vm.subject.attainment.iaLevels[1])" ng-model="vm.subject.attainment.iaLevels[1].stds_pct" class="input-sm"
+                              style="width:40px"/>% of students score more than <input type="text" ng-change="vm.validPctRange('marks_pct', vm.subject.attainment.iaLevels[1])" ng-model="vm.subject.attainment.iaLevels[1].marks_pct" class="input-sm" style="width:40px"/>% marks out of the maximum relevant marks.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <strong> Level 3:</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" ng-change="vm.validPctRange('stds_pct', vm.subject.attainment.iaLevels[2])" ng-model="vm.subject.attainment.iaLevels[2].stds_pct" class="input-sm"
+                             style="width:40px"/>% of students score more than <input type="text" ng-change="vm.validPctRange('marks_pct', vm.subject.attainment.iaLevels[2])" ng-model="vm.subject.attainment.iaLevels[2].marks_pct" class="input-sm" style="width:40px"/>% marks out of the maximum relevant marks.
+                        </div>
+                    </div>
+                </div>
+            </div>                  
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    EA Attainment Level
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <strong> Level 1: </strong>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" ng-change="vm.validPctRange('stds_pct', vm.subject.attainment.eaLevels[0])" ng-model="vm.subject.attainment.eaLevels[0].stds_pct" class="input-sm" 
+                            style="width:40px"/>% of students score more than <input type="text" ng-change="vm.validPctRange('marks_pct', vm.subject.attainment.eaLevels[0])" ng-model="vm.subject.attainment.eaLevels[0].marks_pct" class="input-sm" style="width:40px"/>% marks out of the maximum relevant marks.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <strong>  Level 2:</strong>
+                        </div>
+                        <div class="col-md-6">
+                             <input type="text" ng-change="vm.validPctRange('stds_pct', vm.subject.attainment.eaLevels[1])" ng-model="vm.subject.attainment.eaLevels[1].stds_pct" class="input-sm"
+                              style="width:40px"/>% of students score more than <input type="text" ng-change="vm.validPctRange('marks_pct', vm.subject.attainment.eaLevels[1])" ng-model="vm.subject.attainment.eaLevels[1].marks_pct" class="input-sm" style="width:40px"/>% marks out of the maximum relevant marks.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <strong> Level 3:</strong>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" ng-change="vm.validPctRange('stds_pct', vm.subject.attainment.eaLevels[2])" ng-model="vm.subject.attainment.eaLevels[2].stds_pct" class="input-sm"
+                             style="width:40px"/>% of students score more than <input type="text" ng-change="vm.validPctRange('marks_pct', vm.subject.attainment.eaLevels[2])" ng-model="vm.subject.attainment.eaLevels[2].marks_pct" class="input-sm" style="width:40px"/>% marks out of the maximum relevant marks.
+                        </div>
+                    </div>
+                </div>
+            </div>                  
+            <input type="submit" class="btn btn-default form-control input-sm" wz-next value="Complete" />
+        </wz-step>        
+    </wizard>
+  </form>
+</section>

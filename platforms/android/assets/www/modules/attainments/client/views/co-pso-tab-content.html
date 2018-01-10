@@ -1,0 +1,118 @@
+<div ng-show="vm.attainments.length > 0">
+
+<table class="table table-condensed" style="text-align: center">
+        <thead>
+            <tr>
+                <th colspan="17">
+                    <input type="text"ng-model="vm.search.attainment"  
+                    class="form-control input-sm" placeholder="search for attainment"/>
+                </th>
+            </tr>
+            <tr>
+                <th style="text-align: center">Subject</th>
+                <th style="text-align: center">Code</th>                
+                <th style="text-align: center">Batch</th>  
+                <th style="text-align: center">Sem</th>             
+                <th style="text-align: center">IA</th>
+                <th style="text-align: center">EA</th>
+                <th style="text-align: center" ng-repeat="pso in vm.psosList">
+                     <span uib-tooltip="{{vm.psos[pso]}}" tooltip-placement="bottom">
+                         {{ pso }}
+                     </span>
+                </th>                   
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="attainment in vm.attainments | filter: vm.filterAttainment">
+                <td><strong>{{attainment.subject.name}}</strong></td>
+                <td><strong>{{attainment.subject.subjectCode}}</strong></td>                
+                <td><strong>{{attainment.batch.name}}</strong></td>
+                <td><strong>{{attainment.subject.semester}}</strong></td>
+   <td>  
+                            <script type="text/ng-template" id="iaTemplate.html">                               
+                                <table class="table table-hover table-striped table-condensed">
+                                     <tr>
+                                        <th>
+                                            
+                                        </th>
+                                        <th colspan="3" style="text-align: center">
+                                            IA Level
+                                        </th>                                                                               
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            CO
+                                        </th>
+                                        <th>
+                                            1
+                                        </th>
+                                        <th>
+                                            2
+                                        </th>
+                                          <th>
+                                            3
+                                        </th>                                     
+                                    </tr>
+                                    <tr ng-repeat="coIa in attainment.ia | orderBy: 'co'">
+                                        <td>{{ coIa.co }}</td>
+                                        <td>{{ coIa.al1.toFixed(0)}}%</td>
+                                        <td>{{coIa.al2.toFixed(0)}}%</td>
+                                        <td>{{coIa.al3.toFixed(0)}}%</td>
+                                    </tr>
+
+                                </table>
+                            </script>                        
+                            <span uib-popover-template="'iaTemplate.html'" popover-title="CO Attainment" popover-placement="right" popover-trigger="'mouseenter'">
+                                {{attainment.iaAl}}                                                             
+                            </span>                                    
+                        </td>
+                        <td> 
+                            <script type="text/ng-template" id="eaTemplate.html">                               
+                                <table class="table table-hover table-striped table-condensed">
+                                     <tr>
+                                        <th>
+                                            
+                                        </th>
+                                        <th colspan="3" style="text-align: center">
+                                            EA Level
+                                        </th>                                                                               
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            CO
+                                        </th>
+                                        <th>
+                                            1
+                                        </th>
+                                        <th>
+                                            2
+                                        </th>
+                                          <th>
+                                            3
+                                        </th>                                     
+                                    </tr>
+                                    <tr ng-repeat="coIa in attainment.ea">
+                                        <td>{{ coIa.co }}</td>
+                                        <td>{{ coIa.al1.toFixed(0)}}</td>
+                                        <td>{{coIa.al2.toFixed(0)}}</td>
+                                        <td>{{coIa.al3.toFixed(0)}}</td>
+                                    </tr>
+
+                                </table>
+                            </script>
+                             <span uib-popover-template="'eaTemplate.html'" popover-title="CO Attainment" popover-placement="right" popover-trigger="'mouseenter'">
+                                {{attainment.eaAl}}                                                             
+                            </span>                           
+                        </td>
+                <td ng-repeat="pso in vm.psosList">
+                     <span uib-tooltip="{{vm.psos[pso]}}" tooltip-placement="left">
+                         {{attainment.psos[pso].toFixed(3)}}{{ vm.getAttainmentPercentage( attainment.psos[pso]) }}
+                    </span>
+                </td>                       
+            </tr>
+        </tbody>
+</table>
+</div>
+<div ng-show="vm.attainments.length == 0">
+    No attainment found
+</div>

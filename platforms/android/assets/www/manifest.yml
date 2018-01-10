@@ -1,0 +1,13 @@
+---
+declared-services:
+  track-mongo:
+    label: mongodb
+    plan: 100
+applications:
+- name: track
+  host: inops-track
+  memory: 256M
+  services:
+  - track-mongo
+  env:
+    NODE_ENV: cloud-foundry

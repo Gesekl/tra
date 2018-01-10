@@ -1,0 +1,82 @@
+<style>
+    .align-center {
+        text-align:center
+    }
+</style>
+<section>  
+  
+  <div class="page-header" style="padding-top: 10px">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="input-group">
+            <div>
+                <label style="font-size: 20px">Assessment</label>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+             <div class="input-group">
+                <div class="input-group-addon">Batch</div>
+                <select ng-options="batch._id as batch.name for batch in vm.batches" 
+                    ng-model="vm.search.batchId" class="form-control input-sm" id="batch" name="batch"
+                    ng-change="vm.onBatchChange()">  
+                </select>
+            </div>                 
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select ng-options="section for section in vm.sections"
+                    ng-model="vm.search.section" class="form-control input-sm" id="section" name="section"
+                    ng-change="vm.onSectionChange()">  
+                </select>                            
+             </div>                      
+          </div>
+      </div>
+      <div class="col-md-2">
+          <div class="form-group">
+               <div class="input-group">
+                 <div class="input-group-addon">Subject</div>
+                 <select ng-options="subject._id as subject.name for subject in vm.subjects | filter: { section: vm.search.section}" 
+                    ng-model="vm.search.subjectId" class="form-control input-sm" id="subject" name="subject"
+                    ng-change="vm.onSubjectChange()">  
+                    </select>                           
+             </div>                   
+          </div>
+      </div>
+      </div>
+      </div>
+      <!--assessment Details for all student-->
+     
+      <div ng-show="!vm.nodata==0">
+        <input type="text" name="student" ng-model="vm.studentFilter" class="form-control input-sm" placeholder="search each student " />
+          <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-sm-1">Name</th>
+                <th class="col-sm-1">USN</th>
+                <th class="col-sm-1" ng-repeat="ia in vm.iash">{{ia}}</th>
+                <th class="col-sm-1">Total</th>
+                
+      </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="assessment in vm.allassessment | filter: vm.studentFilter ">    
+                <td>{{ assessment.name}}</td>
+                <td>{{ assessment.usn }}</td>              
+                <td ng-repeat="mark in assessment.assesslist"> {{mark.score}}</td>
+                <td>  {{assessment.total}}</td>          
+            </tr>
+      
+    </tbody>
+  </table>
+      </div>
+       <div ng-show="vm.nodata==0">
+           <h2>No Data found</h2>
+      </div>
+      </section>
+
+      

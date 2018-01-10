@@ -1,0 +1,226 @@
+<style>
+    .align-center {
+        text-align:center
+    }
+    .table thead th { 
+        background-color: #bce8f1;         
+    }
+     .table tfoot th { 
+        background-color: #bce8f1;
+    }
+</style>
+<section>  
+  
+  <div class="page-header" style="padding-top: 10px">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="input-group">
+            <div>
+                <label style="font-size: 20px">Subject Attainment</label>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+             <div class="input-group">
+                <div class="input-group-addon">Batch</div>
+                <select ng-options="batch._id as batch.name for batch in vm.batches" 
+                    ng-model="vm.search.batchId" class="form-control input-sm" id="batch" name="batch"
+                    ng-change="vm.onBatchChange()">  
+                </select>
+            </div>                 
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select ng-options="section for section in vm.sections"
+                    ng-model="vm.search.section" class="form-control input-sm" id="section" name="section"
+                    ng-change="vm.onSectionChange()">  
+                </select>                            
+             </div>                      
+          </div>
+      </div>
+      <div class="col-md-2">
+          <div class="form-group">
+               <div class="input-group">
+                 <div class="input-group-addon">Subject</div>
+                 <select ng-options="subject._id as subject.name for subject in vm.subjects | filter: { section: vm.search.section}" 
+                    ng-model="vm.search.subjectId" class="form-control input-sm" id="subject" name="subject"
+                    ng-change="vm.onSubjectChange()">  
+                    </select>                           
+             </div>                   
+          </div>
+      </div>
+       <div class="col-md-2">
+           <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Level</div>
+                    <select class="form-control input-sm" ng-model="vm.search.level" id="level" name="level" ng-change="vm.calculatQuestionAttainment()"> 
+                        <option ng-repeat="level in vm.attainmentLevels" value="{{level}}">{{level}}</option>
+                    </select> 
+                </div>
+           </div>
+        </div>
+        <div class="col-md-2 pull-right">          
+           <div class="col-md-2 pull-right">        
+                      
+            </div>
+        </div>        
+        
+    </div>  
+  </div>
+ 
+    <!-- Attainment Summary - Start -->
+    <div class="row">                 
+        <div class="col-lg-2 col-md-2" ng-repeat="att in vm.subjectAttainment.ia | orderBy: 'co'"> 
+            <div class="panel panel-info">
+                <div class="panel-heading align-center">                    
+                     <span uib-tooltip="{{vm.getCODescription(att.co).description}}" tooltip-placement="bottom">
+                        <b>CO{{ att.co.split(".")[1]}}</b>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-sm-2">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <div class="c100 p{{ att['al' + vm.search.level ].toFixed(0) }} small center green">                               
+                                <span>{{ att['al' + vm.search.level ].toFixed(0) }}%</span>
+                                <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                </div>                        
+                            </div>      
+                        </div>
+                    </div>                                 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2" ng-if="vm.subjectAttainment.ia.length > 0"> 
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <b>Internal Attainment Level</b>
+                </div>
+                <div class="panel-body align-center">
+                        <h1>{{  vm.subjectAttainment.iaAl }}</h1>
+                </div>
+                <div class="panel-footer">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2" ng-if="vm.subjectAttainment.ia.length > 0"> 
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <b>External Attainment Level</b>
+                </div>
+                <div class="panel-body align-center">
+                        <h1>{{  vm.subjectAttainment.eaAl }}</h1>
+                </div>
+                <div class="panel-footer">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>           
+    <!-- Attainment Summary - End -->
+
+    <!-- Attainment Details - Start -->
+
+    <div ng-show="vm.assessments.length > 0 && vm.questions[vm.search.ia]">   
+    <table class="table table-condensed table-bordered table-hover table-striped table-responsive fill">
+        <thead>         
+            <tr>                
+                <th class="col-sm-1 text-info" ></th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <span uib-tooltip="{{vm.getCODescription(assessment.co).description}}" tooltip-placement="bottom">
+                        CO{{ assessment.co.split(".")[1] }}
+                    </span>
+                </th>
+            </tr> 
+            <tr>        
+                <th class="col-sm-1">Assessment</th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <span uib-tooltip="{{assessment.question}}" tooltip-placement="bottom">
+                        {{ assessment.ia.replace("_"," ")}}
+                    </span>
+                </th>               
+            </tr>      
+            <tr>        
+                <th class="col-sm-1">Marks</th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <span uib-tooltip="{{assessment.question}}" tooltip-placement="bottom">
+                        {{ assessment.marks }}
+                    </span>
+                </th>               
+            </tr>             
+            <tr>        
+                <th class="col-sm-1">USN</th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <span uib-tooltip="{{assessment.question}}" tooltip-placement="bottom">
+                        Q{{ assessment.qno }}
+                    </span>
+                </th>               
+            </tr>
+        </thead>
+        <tfoot>                    
+            <tr>        
+                <th class="col-sm-1">Yes</th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <b style="color: green">
+                        {{vm.questionAttainment[assessment.ia][assessment.qno]['Yes']}}                           
+                    </b>
+                </th>               
+            </tr>
+            <tr>        
+                <th class="col-sm-1">No</th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <b style="color: red">                           
+                        {{vm.questionAttainment[assessment.ia][assessment.qno]['No']}}
+                    </b>
+                </th>               
+            </tr>            
+            <tr>        
+                <th class="col-sm-1">Attainment</th>
+                <th ng-repeat="assessment in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    <b>                           
+                        {{ vm.questionAttainment[assessment.ia][assessment.qno]['result']  }}
+                    </b>
+                </th>               
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <th colspan="{{vm.subject.assessment.length + 1}}">
+                    <input type="text" name="student" ng-model="vm.studentFilter" class="form-control input-sm" placeholder="search student usn or type any special char to see the summary e.g =" />
+                </th>                       
+            </tr>
+            <tr ng-repeat="assessment in vm.assessments | filter: vm.filterAssessmentByStudent ">                                
+                <td>{{ assessment.student.usn }}</td>
+                <td ng-repeat="question in vm.subject.assessment | orderBy: 'co'" class="align-center">
+                    {{ vm.allStudentAssessment[assessment.student.usn].assessment[question.ia][question.qno].score }}
+                    <span ng-if="vm.allStudentAssessment[assessment.student.usn].assessment[question.ia][question.qno]['al' + vm.search.level ] == 'Yes'"  class="glyphicon glyphicon-ok text-success"></span> 
+                    <span ng-if="vm.allStudentAssessment[assessment.student.usn].assessment[question.ia][question.qno]['al' + vm.search.level ] == 'No'"  class="glyphicon glyphicon-remove text-danger"></span>                   
+                </td>                               
+            </tr>
+        </tbody>     
+    </table>   
+
+    </div>
+
+    <!-- Attainment Details - End -->
+    
+
+
+
+  <div class="panel panel-info" ng-show="vm.search.subjectId && !vm.questions[vm.search.ia]">
+      <div class="panel-heading">Add questions</div>
+      <div class="panel-body">
+          No questionnaire were added for {{vm.search.ia}}. Click <span><a ui-sref="subjects.questioner({ subjectId: vm.search.subjectId })">here</a></span> to add questioner.
+       </div> 
+  </div>
+ 
+  
+</section>

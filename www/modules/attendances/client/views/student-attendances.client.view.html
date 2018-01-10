@@ -1,0 +1,51 @@
+<section>
+  <div class="page-header">
+    <h3>Attendance Details</h3>
+  </div>
+ 
+ <table class="table table-striped">
+    <thead>
+      <tr>
+       <th>Subject Name</th>
+       <th>Subject Code</th>
+       <th>Total Classes</th>
+        <th>Present</th>
+       <th>Attendance(%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="atte in vm.attendances">
+         <td>{{atte.name}}</td>
+         <td>{{atte.subjectCode}}</td>
+        <td>{{atte.totalAttendance}}</td>
+         <td>{{atte.pCount}}</td>
+        <td>{{atte.percent}}</td>
+       
+      </tr>
+    </tbody>
+  </table>
+  <!--{{vm.attendances }}
+
+{{ vm.batches}}
+
+{{vm.attend}}-->
+  <!--<div class="list-group">
+    <a ng-repeat="attendance in vm.attendances"
+       ui-sref="attendances.view({ attendanceId: attendance._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="attendance.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="attendance.user" ng-bind="attendance.user.displayName"></span>
+        <span ng-if="!attendance.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="attendance.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.attendances.$resolved && !vm.attendances.length">
+    No Attendances yet, why don't you <a ui-sref="attendances.create">create one</a>?
+  </div>
+  <div id="container"></div>
+  <button type="submit" ng-click="vm.click()">data</button>-->
+</section>

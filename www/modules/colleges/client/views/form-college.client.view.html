@@ -1,0 +1,53 @@
+<section>
+  <div class="page-header">
+    <h2>{{vm.college._id ? 'Edit College' : 'New College'}}</h2>
+  </div>
+  <div class="col-md-3">
+    <form name="vm.form.collegeForm" class="form-horizontal" ng-submit="vm.save(vm.form.collegeForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Name</label>
+          <input name="name" type="text" ng-model="vm.college.name" id="name" class="form-control input-sm" placeholder="Name" required>
+          <div ng-messages="vm.form.collegeForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">College name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="collegeId">College ID</label>
+          <input name="collegeId" type="text" ng-model="vm.college.collegeId" id="collegeId" class="form-control input-sm" placeholder="College ID" required>
+          <div ng-messages="vm.form.collegeForm.collegeId.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">College college id is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="contact">Contact</label>
+          <input name="contact" type="text" ng-model="vm.college.contact" id="contact" class="form-control input-sm" placeholder="College Contact ( mobile )" required>
+          <div ng-messages="vm.form.collegeForm.contact.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">College contact is required.</p>
+          </div>
+        </div>       
+        <div class="form-group" show-errors>
+          <label class="control-label" for="email">E-Mail</label>
+          <input name="email" type="text" ng-model="vm.college.email" id="email" class="form-control input-sm" placeholder="College E-Mail" required>
+          <div ng-messages="vm.form.collegeForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">College email is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="address">Address</label>
+          <textarea name="address" rows="5" ng-model="vm.college.address" id="address" class="form-control input-sm" required>
+          </textarea>
+          <div ng-messages="vm.form.collegeForm.address.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">College address is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.college._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

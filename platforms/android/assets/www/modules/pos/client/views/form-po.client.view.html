@@ -1,0 +1,34 @@
+<section>
+  <div class="page-header">
+    <h2>{{vm.po._id ? 'Edit PO' : 'New PO'}}</h2>
+  </div>
+  <div class="col-md-4">
+    <form name="vm.form.poForm" class="form-horizontal" ng-submit="vm.save(vm.form.poForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Program Output Name</label>
+          <input name="name" type="text" readonly ng-model="vm.po.name" id="name" class="form-control input-sm" placeholder="PO Name" required>
+          <div ng-messages="vm.form.poForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">PO name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="description">Description</label>
+          <textarea name="name" type="text" ng-model="vm.po.description" 
+            rows = "10"
+            id="description" class="form-control input-sm" required>
+          </textarea>
+          <div ng-messages="vm.form.poForm.description.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">PO description is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.po._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

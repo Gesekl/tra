@@ -1,0 +1,26 @@
+<section>
+  <div class="page-header">
+    <h2>All PO</h2>
+  </div>
+  <div class="form-group">
+        <input type="text" ng-model="po" class="form-control input-sm" placeholder="Search PO" />
+   </div>
+  <div class="list-group">   
+    <a ng-repeat="po in vm.pos | orderBy:'_id' | filter: po"
+       ui-sref="pos.edit({ poId: po._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="po.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="po.user" ng-bind="po.user.displayName"></span>
+        <span ng-if="!po.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="po.name"></h4>
+      <span ng-bind="po.description"></span>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.pos.$resolved && !vm.pos.length">
+    No Pos yet, why don't you <a ui-sref="pos.create">create one</a>?
+  </div>
+</section>

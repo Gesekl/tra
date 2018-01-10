@@ -1,0 +1,103 @@
+<div class="page-header" style="padding-top: 10px">
+    <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+              <div class="input-group">
+                   <label style="font-size: 20px">Attendance</label>
+              </div>                 
+          </div>
+      </div>
+        <div class="col-md-2">
+          <div class="form-group">
+              <div class="input-group">
+                  <div class="input-group-addon">Batch</div>
+                <select class="form-control input-sm"
+                 ng-change="vm.onSearchOptionChange()" 
+                 ng-model="vm.attendance.batch" 
+                 ng-options="batch._id as batch.name for batch in vm.batches"></select>          
+              </div>                 
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select class="form-control input-sm" 
+                ng-model="vm.attendance.section" 
+                ng-options="batch for batch in vm.sections"></select>
+                                    
+             </div>                      
+          </div>
+      </div>
+      <div class="col-md-2">
+          <div class="form-group">
+               <div class="input-group">
+                 <div class="input-group-addon">Subject</div>
+                <select class="form-control input-sm"  
+                  ng-change="vm.onSearchOptionChange()"               
+                ng-model="vm.attendance.subject" 
+                ng-options="batch.name for batch in vm.allLectureSubjects"></select>                                 
+             </div>                   
+          </div>
+      </div>  
+    </div>
+  </div>  
+ <toaster-container></toaster-container>
+ <div  ng-if="vm.attendanceIsStarted">
+
+<div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Attend Date</div>
+                <select class="form-control input-sm" 
+                ng-model="vm.attendance.date" 
+                ng-options="batch.created|date for batch in vm.attendances"></select>
+              </div>                      
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">USN</div>
+                <select class="form-control input-sm" 
+                ng-model="vm.attendance.studentId" 
+                ng-change="vm.selectedstu(vm.attendance.studentId)"
+                ng-options="batch.usn for batch in vm.attendance.stdAttendance"></select>
+                                  
+             </div>                      
+          </div>
+      </div>
+       <div class="col-md-1" ng-if="vm.attendance.studentId">
+          <div class="form-group">
+               <div class="input-group">
+                 <div  ng-if="vm.attendanceIsStarted" class="form-group col-md-1">
+                    <button type="submit"  ng-click="vm.update()" class="btn btn-sm btn-primary">{{vm.buttonstatus ? 'Update' : 'Get status'}}</button> 
+                </div>                       
+             </div>               
+          </div>
+      </div> 
+      <table  class="table table-striped table-responsive" ng-if="vm.tableview">
+             <thead>
+                 <tr>
+                    <th class="col-md-2 col-lg-2">Name</th>
+                    <th class="col-md-2 col-lg-2">USN</th>
+                    <th class="col-md-2 col-lg-2">Status</th>
+                    <th class="col-md-2 col-lg-2">Action</th>
+                 </tr>
+              </thead>
+            <tbody>
+                <tr>
+                    <td>{{vm.studentDetails.name}}</td>
+                    <td>{{vm.studentDetails.usn}}</td>
+                    <td>
+                       {{vm.updated}}
+                       <!-- <label ng-if="vm.msg">Updated successfully</label> -->
+                    </td>
+                    <td>
+                        <button ng-click="vm.absent()" class="btn btn-danger btn-xs">Absent</button>           
+                        <button ng-click="vm.present()" class="btn btn-success btn-xs">Present</button>              
+                    </td>
+                    
+                </tr>
+            </tbody>
+      </table>

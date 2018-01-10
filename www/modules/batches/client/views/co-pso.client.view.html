@@ -1,0 +1,35 @@
+<section>
+  
+    <div ng-show="vm.copsos.length > 0 ">
+        <table class="table table-hover table-striped table-condensed" style="text-align: center">
+            <thead>
+                <tr>
+                    <th colspan="8">
+                        <input type="text" ng-model="vm.search.subject" class="form-control input-sm" placeholder="search for subject" />
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: center">Subject</th>
+                    <th style="text-align: center">Code</th>
+                    <th style="text-align: center" ng-repeat="pso in vm.psosList">
+                       <span uib-tooltip="{{vm.psos[pso]}}" uib-tooltip-placement="bottom">
+                            {{pso}}
+                       </span>
+                    </th>                
+                </tr>
+            </thead>
+                    <tbody>
+                        <tr ng-repeat="co in vm.copsos | filter: vm.search.subject">
+                            <td><strong>{{co.subject}}</strong></td>
+                            <td><strong>{{co.subjectCode}}</strong></td>
+                            <td ng-repeat="pso in vm.psosList">
+                                 <span uib-tooltip="{{vm.psos[pso]}}" tooltip-placement="left">
+                                       {{co[pso].toFixed(3)}}
+                                </span>                                
+                            </td>                                                         
+                        </tr>
+                    </tbody>
+        </table>
+    </div>
+        
+</section>

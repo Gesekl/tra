@@ -1,0 +1,67 @@
+<section>
+  <div class="page-header">
+      <h3>  
+        <div class="row">
+            <div class="col-md-2">
+                  My Subjects
+            </div>
+            <div class="col-md-2">
+                <div class="input-group">
+                    <div class="input-group-addon">Batch</div>
+                    <select style="width:150px;" ng-options="batch.name as batch.name for batch in vm.batches" 
+                        ng-model="vm.search.batch" class="form-control input-sm" id="batch" name="batch"
+                      ng-change="vm.onChangeOptions()">  
+                    </select>  
+                </div> 
+            </div>
+            <!--  <select class="form-control" id="sel1" style="width:200px;">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select> -->
+        </div>
+      </h3>
+  </div>
+  <div class="form-group">
+      <input type="text" ng-model="subject" class="form-control input-sm" placeholder="Search Subject" />
+  </div>
+
+  
+  <table class="table table-condensed table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Subject Name</th>
+        <th>Subject Code</th>
+        <th>Batch</th>
+        <th>Section</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="subject in vm.subjects | filter: subject">
+        <td>{{ subject.name }}</td>
+        <td>{{ subject.subjectCode }}</td>
+        <td>{{ subject.batch.name }}</td>
+        <td>{{ subject.section }}</td>
+        <td>
+          <!--<span uib-tooltip="Add CO, CO-PO, CO-PSO, Attatiment Levels" tooltip-placement="bottom">  
+          <a class="btn btn-primary btn-xs" 
+            ui-sref="subjects.config({ subjectId: subject._id })">
+            <i class="glyphicon glyphicon-asterisk"></i>
+          </a>
+          </span>-->
+          <span uib-tooltip="Add Question Paper" tooltip-placement="bottom">
+          <a class="btn btn-primary btn-xs"
+            ui-sref="subjects.questioner({ subjectId: subject._id })">
+            <i class="glyphicon glyphicon-list"></i>
+          </a>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>   
+  <div class="alert alert-warning text-center" ng-if="vm.subjects.$resolved && !vm.subjects.length">
+    No subjects assigned yet.
+  </div>
+</section>

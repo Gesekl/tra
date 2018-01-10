@@ -1,0 +1,69 @@
+   
+ <div class="page-header" style="padding-top: 10px">
+    <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+              <div class="input-group">
+                   <label style="font-size: 20px">Attendance Summary</label>
+              </div>                 
+          </div>
+      </div>
+        <div class="col-md-2">
+          <div class="form-group">
+              <div class="input-group">
+                  <div class="input-group-addon">Batch</div>
+                <select class="form-control input-sm" ng-change="vm.clearBatchandSection('Batch')" ng-model="vm.attendance.batch" ng-options="batch._id as batch.name for batch in vm.batches"></select>
+          
+              </div>                 
+          </div>
+      </div>
+    <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select class="form-control input-sm" ng-change="vm.onBatchAndSectionChange()" ng-model="vm.attendance.section" ng-options="batch for batch in vm.sections"></select>
+                                    
+             </div>                      
+          </div>
+      </div>
+     <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Semisters</div>
+                <select class="form-control input-sm" ng-change="vm.onSemisterChange()" ng-model="vm.attendance.semister" ng-options="semister for semister in vm.semisters"></select>
+                                    
+             </div>                      
+          </div>
+      </div>
+                 
+    </div>  
+  </div>
+
+    
+    <table ng-if="vm.attendance.batch && vm.attendance.section && vm.attendance.semister" class="table table-hover">
+         <thead>
+            <tr>
+                <th>Student</th>
+                <th ng-repeat="row in vm.subjectsBySemister">{{row.name}} (T :- {{ vm.attendanceSummary[vm.studentsList[0]._id][row._id].totalAttendance}})</th>
+            </tr>
+            <tr>
+				 <th colspan="5"><input class="form-control input-sm" ng-model="searchStudent" placeholder="global search ..." type="text"/></th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr ng-repeat="row in vm.studentsList | filter :searchStudent">
+               <td>{{row.name}}--<b>{{row.usn}}</b></td>
+               <td ng-repeat="subject in vm.subjectsBySemister">
+                      {{ vm.attendanceSummary[row._id][subject._id].pCount / vm.attendanceSummary[row._id][subject._id].totalAttendance * 100 | number:2}}
+                    <b>  (P:{{vm.attendanceSummary[row._id][subject._id].pCount}})</b>
+	              </td>
+            </tr>
+            
+           </tbody>
+      </table>
+    <!--<div id="container"></div>-->
+    
+
+
+
+

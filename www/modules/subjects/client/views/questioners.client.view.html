@@ -1,0 +1,62 @@
+
+<form name="myForm">   
+    <div class="page-header row" style="padding-top: 10px">
+       <div class="col-md-3">
+            <div class="input-group">
+                <div>
+                    <span style="font-size: 20px">Question Paper For: </span><label style="font-size: 20px">{{ vm.subject.name }}</label>
+                </div>
+            </div>
+        </div>
+         <div class="col-sm-8">
+             <!--ngf-accept="'.pdf,.doc,.docx'"-->
+    <div id="resume" ngf-select="ngf-select" ng-model="vm.assessment.file" ngf-change=" vm.resume($files)" name="files"  class="btn btn-info">Select File</div>
+    <p ng-hide="progressVisible">Upload .pdf,.doc,.docx files.
+      <div ng-show="progressVisible">
+        <div class="percent">{{percentage}}% Uploaded</div>
+        <div class="progress-bar">
+          <div ng-style="{'width': percentage+'%'}" class="uploaded"></div>
+        </div>
+      </div>
+      <p>{{uploadedFileName}}</p>
+    </p>
+    
+  </div>
+        <div class="col-md-3">
+            <div class="form-group" >
+                <div class="input-group">
+                    <div class="input-group-addon">Enter Assessment Name</div>
+                <input class="form-control" id="ex2" ng-model="vm.ia" type="text" required="required">    
+                </div>                      
+            </div>
+        </div>   
+         <div class="col-md-3">
+            <div class="input-group">
+                <div>
+                 <button type="button" class="btn btn-primary" ng-click="vm.saveQuestions()" ng-disabled="myForm.$invalid">Save</button>    
+                </div>
+            </div>
+        </div>  
+      
+         <button ng-click="vm.download()">Download</button>  
+      
+    </div>
+   <!--<div ng-show="vm.ia === 'EA'" class="col-md-2">
+       <div ng-repeat="question in vm.questions">
+           <div class="form-group">
+                <label>Marks</label>
+                <input type="text" name="marks" ng-model="question.marks" id="marks" 
+                class="form-control input-sm" value="" required="required" />
+           </div>
+        </div>
+   </div>-->
+   <toaster-container></toaster-container>
+</form>
+ 
+  
+
+
+
+
+
+

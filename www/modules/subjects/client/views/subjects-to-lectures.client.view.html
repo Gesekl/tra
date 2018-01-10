@@ -1,0 +1,89 @@
+<section>
+    <div class="page-header">
+        <h3>
+            <div class="row"> 
+                <div class="col-md-2">
+                    <div class="input-group">
+                        Planning
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Batch</div>
+                            <select ng-options="batch._id as batch.name for batch in vm.batches" 
+                                ng-model="vm.search.batchId" class="form-control input-sm" id="batch" name="batch">
+                 
+                            </select>
+                        </div>                 
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group" >
+                        <div class="input-group">
+                            <div class="input-group-addon">Section</div>
+                            <select ng-options="section for section in vm.sections"
+                                ng-model="vm.search.section" class="form-control input-sm" id="section" name="section">
+                               
+                            </select>                            
+                        </div>                      
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group" >
+                        <div class="input-group">
+                            <div class="input-group-addon">Semester</div>
+                            <select ng-options="semester for semester in vm.semesters"
+                                ng-model="vm.search.semester" class="form-control input-sm" id="semester" name="semester"
+                                ng-change="vm.onChangeOptions()">  
+                            </select>                            
+                        </div>                      
+                    </div>
+                </div>
+                <div class="col-md-2 pull-right">        
+                    <div class="input-group pull-right">              
+                        <span uib-tooltip="Export to PDF" tooltip-placement="left">
+                            <a class="btn btn-primary btn-xs" ng-disabled="!(vm.search.batchId && vm.search.section && vm.search.semester)" href ng-click="vm.exportToPdf()">
+                                <i class="glyphicon glyphicon-export"></i>
+                            </a>        
+                        </span>
+                    </div>       
+            </div>         
+            </div>
+        </h3>
+  </div>
+  
+  <table class="table table-condensed" ng-show="vm.subjects.length > 0 ">
+        <thead>
+             <tr>
+                <th colspan="4">
+                    <input type="text" class="form-control input-sm" placeholder="search for subject" ng-model="vm.subjectFilter"/>
+                </th>               
+            </tr>
+            <tr>
+                <th class="col-md-2">Subject Code</th>  
+                <th class="col-md-3">Subject Name</th>                           
+                <th class="col-md-3">Lecture</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-if="vm.subjects.length" ng-repeat="subject in vm.subjects | filter: vm.subjectFilter">
+                <td>{{ subject.subjectCode }}</td>
+                <td>{{ subject.name }}</td> 
+                <td> 
+                    <select ng-options="lecture._id as lecture.name for lecture in vm.lectures" ng-model="subject.lecture" class="form-control input-sm" id="lecture" name="lecture">  
+                    </select>
+                </td>
+                <td>                
+                    <button type="button" class="btn btn-primary btn-sm" 
+                    ng-click="vm.assignLectureToSubject(subject)">Update</button>                
+                </td>
+            </tr>
+            <tr ng-if="!vm.subjects.length">
+                <td colspan="4">No subjects found!!</td>
+            </tr>
+        </tbody>
+    </table>
+   <toaster-container></toaster-container>
+</section>

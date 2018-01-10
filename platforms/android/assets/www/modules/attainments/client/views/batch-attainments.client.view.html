@@ -1,0 +1,63 @@
+<section>
+  <!-- Page Header with Menu -->
+  <div class="page-header">
+    <h3>
+        <div class="row">
+          <div class="col-md-2">
+              Attainment    
+          </div>
+          <div class="col-md-2">
+            <div class="input-group">
+                <div class="input-group-addon">Batch</div>
+                <select ng-options="batch._id as batch.name for batch in vm.batches" 
+                    ng-model="vm.search.batchId" class="form-control input-sm" id="batch" name="batch"
+                   ng-change="vm.onChangeOptions()">  
+                </select>  
+            </div> 
+          </div>
+          <div class="col-md-2">
+            <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select ng-options="section for section in vm.sections"
+                    ng-model="vm.search.section" class="form-control input-sm" id="section" name="section"
+                    ng-change="vm.onChangeOptions()">  
+                </select>   
+            </div> 
+          </div>
+          <div class="col-md-2 pull-right">        
+                    <div class="input-group pull-right">              
+                        <span uib-tooltip="Export to PDF" tooltip-placement="left">
+                            <a class="btn btn-primary btn-xs" ng-disabled="!(vm.search.batchId && vm.search.section)" href ng-click="vm.exportToPdf()">
+                                <i class="glyphicon glyphicon-export"></i>
+                            </a>        
+                        </span>
+                    </div>       
+            </div>
+        </div>         
+    </h3>   
+  </div>
+
+ 
+  <div class="row" ng-show="vm.attainments.length > 0"> 
+      <div class="col-md-12">
+          <ul class="nav nav-tabs">
+              <li ng-click="vm.selectTab(tab)" ng-class="{'active': vm.isActive(tab.id)}" ng-repeat="tab in vm.tabs">
+                <a data-target="#{{tab.id}}" data-toggle="tab"> {{tab.title}}</a>
+              </li>
+              <li class="pull-right">                   
+              </li>              
+          </ul>
+      </div>
+  </div>
+  
+  <div class="row"  ng-show="vm.attainments.length > 0">
+    <div class="col-12 col-sm-12 col-lg-12">
+      <div class="tab-content">
+        <div class="tab-pane" ng-class="{'active': vm.isActive(tab.id)}" id="{{tab.id}}" ng-repeat="tab in vm.tabs" ng-if="tab.load === true">          
+          <div ng-include src="tab.templateUrl"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>

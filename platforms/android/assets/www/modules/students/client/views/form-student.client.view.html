@@ -1,0 +1,83 @@
+<section>
+  <div class="page-header">
+    <h2>{{vm.student._id ? 'Edit Student' : 'New Student'}}</h2>
+  </div>
+  <div class="col-md-3">
+    <form name="vm.form.studentForm" class="form-horizontal" ng-submit="vm.save(vm.form.studentForm.$valid)" novalidate>
+      <fieldset>
+         <div class="form-group" show-errors>        
+           <label class="control-label" for="batch">Batch</label>
+           <select ng-options="batch._id as batch.name for batch in vm.batches" ng-model="vm.student.batch" class="form-control input-sm" id="batch" name="batch">  
+           </select>    
+           <div ng-messages="vm.form.subjectForm.batch.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Batch is required.</p>
+           </div>     
+        </div>
+        <div class="form-group" show-errors>
+           <label class="control-label" for="section">Section</label>
+           <select ng-options="section for section in vm.sections" ng-model="vm.student.section" class="form-control input-sm" id="section" name="section">  
+           </select>    
+           <div ng-messages="vm.form.subjectForm.section.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Section is required.</p>
+           </div>     
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="fname">First Name</label>
+          <input name="fname" type="text" ng-model="vm.student.firstName" id="fname" class="form-control input-sm" placeholder="First Name" required>
+          <div ng-messages="vm.form.studentForm.fname.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student first name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="lname">Last Name</label>
+          <input name="lname" type="text" ng-model="vm.student.lastName" id="lname" class="form-control input-sm" placeholder="Last Name" required>
+          <div ng-messages="vm.form.studentForm.lname.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student last name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="usn">USN</label>
+          <input name="usn" type="text" ng-model="vm.student.usn" id="usn" class="form-control input-sm" placeholder="USN" required>
+          <div ng-messages="vm.form.studentForm.usn.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student usn is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="contact">Contact</label>
+          <input name="contact" type="text" ng-model="vm.student.contact" id="contact" class="form-control input-sm" placeholder="Contact" required>
+          <div ng-messages="vm.form.studentForm.contact.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student contact is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="email">E-Mail</label>
+          <input name="email" type="text" ng-model="vm.student.email" id="email" class="form-control input-sm" placeholder="E-Mail" required>
+          <div ng-messages="vm.form.studentForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student email is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="parentName">parent Name</label>
+          <input name="parentName" type="text" ng-model="vm.student.parentName" id="parentName" class="form-control input-sm" placeholder="Father Name" required>
+          <div ng-messages="vm.form.studentForm.parentName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student parent name is required.</p>
+          </div>
+        </div>
+        
+        <div class="form-group" show-errors>
+          <label class="control-label" for="parentemail">parent E-Mail</label>
+          <input name="parentemail" type="text" ng-model="vm.student.parentEmail" id="parentemail" class="form-control input-sm" placeholder="E-Mail" required>
+          <div ng-messages="vm.form.studentForm.parentemail.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Student parent email is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.student._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

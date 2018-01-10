@@ -1,0 +1,34 @@
+<section>
+  <div class="page-header">
+    <h2>{{vm.pso._id ? 'Edit PSO' : 'New PSO'}}</h2>
+  </div>
+  <div class="col-md-4">
+    <form name="vm.form.psoForm" class="form-horizontal" ng-submit="vm.save(vm.form.psoForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Name</label>
+          <input name="name" type="text" readonly ng-model="vm.pso.name" id="name" class="form-control input-sm" placeholder="Name" required>
+          <div ng-messages="vm.form.psoForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Pso name is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="description">Description</label>
+          <textarea name="description" type="text" ng-model="vm.pso.description" 
+            rows = "10"
+            id="description" class="form-control input-sm" required>
+          </textarea>
+          <div ng-messages="vm.form.psoForm.description.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">PSO description is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.pso._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

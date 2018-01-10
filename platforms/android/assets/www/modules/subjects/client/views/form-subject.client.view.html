@@ -1,0 +1,55 @@
+<section>
+  <div class="page-header">
+    <h2>{{vm.subject._id ? 'Edit Subject' : 'New Subject'}}</h2>
+  </div>
+  <div class="col-md-3">
+    <form name="vm.form.subjectForm" class="form-horizontal" ng-submit="vm.save(vm.form.subjectForm.$valid)" novalidate>
+      <fieldset>
+         <div class="form-group" show-errors>        
+           <label class="control-label" for="batch">Batch</label>
+           <select ng-options="batch._id as batch.name for batch in vm.batches" ng-model="vm.subject.batch" class="form-control input-sm" id="batch" name="batch">  
+           </select>    
+           <div ng-messages="vm.form.subjectForm.batch.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Batch is required.</p>
+           </div>     
+        </div>
+        <div class="form-group" show-errors>
+           <label class="control-label" for="semester">Semester</label>
+           <select ng-options="semester for semester in vm.semesters" ng-model="vm.subject.semester" class="form-control input-sm" id="semester" name="semester">  
+           </select>    
+           <div ng-messages="vm.form.subjectForm.semester.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Semester is required.</p>
+           </div>     
+        </div>  
+        <div class="form-group" show-errors>
+           <label class="control-label" for="section">Section</label>
+           <select ng-options="section for section in vm.sections" ng-model="vm.subject.section" class="form-control input-sm" id="section" name="section">  
+           </select>    
+           <div ng-messages="vm.form.subjectForm.section.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Section is required.</p>
+           </div>     
+        </div>       
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Subject Name</label>
+          <input name="name" type="text" ng-model="vm.subject.name" id="name" class="form-control input-sm" placeholder="Name" required>
+          <div ng-messages="vm.form.subjectForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Subject name is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="subjectCode">Subject Code</label>
+          <input name="subjectCode" type="text" ng-model="vm.subject.subjectCode" id="subjectCode" class="form-control input-sm" placeholder="Subject Code" required>
+          <div ng-messages="vm.form.subjectForm.subjectCode.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Subject Code is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.subject._id ? 'Update' : 'Create'}}</button>
+        </div>       
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

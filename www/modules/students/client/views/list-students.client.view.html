@@ -1,0 +1,86 @@
+<section>
+   <div class="page-header" style="padding-top: 10px">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="input-group">
+            <div>
+                <label style="font-size: 20px">Students</label>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+             <div class="input-group">
+                <div class="input-group-addon">Batch</div>
+                <select ng-options="batch._id as batch.name for batch in vm.batches" 
+                    ng-model="vm.search.batchId" class="form-control input-sm" id="batch" name="batch"
+                   ng-change="vm.onChangeOptions()">  
+                </select>
+            </div>                 
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select ng-options="section for section in vm.sections"
+                    ng-model="vm.search.section" class="form-control input-sm" id="section" name="section"
+                    ng-change="vm.onChangeOptions()">  
+                </select>                            
+             </div>                      
+          </div>
+      </div>
+      <div class="col-md-2 pull-right">
+        <div class="form-group" >
+             <div class="input-group pull-right">
+                 <span uib-tooltip="Save" tooltip-placement="left">
+                <a class="btn btn-primary btn-xs" ng-click ="vm.isGridDirty && vm.save()" ng-disabled="!vm.isGridDirty">
+                    <i class="glyphicon glyphicon-floppy-disk"></i>                      
+                </a> 
+                 </span>  
+                {{ ' '}}   
+                <span uib-tooltip="Refresh" tooltip-placement="left">          
+                <a class="btn btn-primary btn-xs" ng-disabled="!vm.isGridDirty" ng-click="vm.refresh()">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </a>
+                </span>
+                {{' '}}
+                <span uib-tooltip="Create New" tooltip-placement="left">
+                <a class="btn btn-primary btn-xs" ui-sref="students.create">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </a>
+                </span>
+                {{ ' '}}
+                <span uib-tooltip="Import CSV" tooltip-placement="left">
+                <span class="btn btn-primary btn-xs">
+                    <i class="glyphicon glyphicon-import"></i>
+                    <form><input type="file" name="file" class="upload_btn" custom-on-change="vm.import"></form>
+                </span>
+                </span>
+                {{ ' '}}
+                <span uib-tooltip="Export to CSV" tooltip-placement="left">
+                <a class="btn btn-primary btn-xs" href ng-click="vm.exportStudents()">
+                    <i class="glyphicon glyphicon-export"></i>
+                </a>        
+                </span>
+             </div>                      
+          </div>
+      </div>         
+    </div>  
+  </div>
+
+  <div class="panel panel-danger" ng-show="vm.listOfStudentsDetailsHavingIssues.length > 0">    
+    <div class="panel-heading">
+        <h3 class="panel-title">Error</h3>
+    </div>
+    <div class="panel-body" ng-show="vm.down"> 
+        <ul>
+            <li ng-repeat="issue in vm.listOfStudentsDetailsHavingIssues">{{ issue.email }} : <span class="danger">{{ issue.msg }}</span></li>
+        </ul>
+    </div>    
+  </div> 
+  <div class="list-group">
+    <div ui-grid="vm.studentGridOptions" ui-grid-auto-resize ui-grid-importer ui-grid-exporter></div>
+  </div>  
+  <toaster-container></toaster-container>
+</section>

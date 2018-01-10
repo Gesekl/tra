@@ -1,0 +1,76 @@
+<style>
+    .align-center {
+        text-align:center
+    }
+</style>
+<section>  
+  
+  <div class="page-header" style="padding-top: 10px">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="input-group">
+            <div>
+                <label style="font-size: 20px">Assessment</label>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+             <div class="input-group">
+                <div class="input-group-addon">Batch</div>
+                <select ng-options="batch._id as batch.name for batch in vm.batches" 
+                    ng-model="vm.search.batchId" class="form-control input-sm" id="batch" name="batch"
+                    ng-change="vm.onBatchChange()">  
+                </select>
+            </div>                 
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Section</div>
+                <select ng-options="section for section in vm.sections"
+                    ng-model="vm.search.section" class="form-control input-sm" id="section" name="section"
+                    ng-change="vm.onSectionChange()">  
+                </select>                            
+             </div>                      
+          </div>
+      </div>
+      <div class="col-md-2">
+          <div class="form-group">
+               <div class="input-group">
+                 <div class="input-group-addon">Subject</div>
+                 <select ng-options="subject._id as subject.name for subject in vm.subjects | filter: { section: vm.search.section}" 
+                    ng-model="vm.search.subjectId" class="form-control input-sm" id="subject" name="subject"
+                    ng-change="vm.onSubjectChange()">  
+                    </select>                           
+             </div>                   
+          </div>
+      </div>
+       <!--<div class="col-md-2">
+           <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">IA Name</div>
+                    <select class="form-control input-sm" ng-model="vm.search.ia" id="ia" name="ia" ng-change="vm.onIAChanges()"> 
+                        <option ng-repeat="ia in vm.ias" value="{{ia}}">{{ia}}</option>
+                    </select> 
+                </div>
+           </div>
+        </div>-->
+    </div> 
+  </div>
+    <table class="table table-condensed">
+        <tr>
+            <th>Qusetion Paper</th>
+        <th></th>
+        </tr>
+        <tr ng-repeat="qp in vm.question">
+            <td>{{qp.ia}}</td>
+            <td>
+            <button class="btn btn-success">Download</button>
+            <button class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+
+    </table>
+</section>

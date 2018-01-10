@@ -1,0 +1,76 @@
+<section>
+  <div class="page-header">
+    <h3>{{vm.lecture._id ? 'Edit Lecture' : 'New Lecture'}}</h3>
+  </div>
+  <div class="col-md-3">
+    <form name="vm.form.lectureForm" class="form-horizontal" ng-submit="vm.save(vm.form.lectureForm.$valid)" novalidate>
+      <fieldset>
+      <div class="form-group" show-errors>
+          <label class="control-label" for="name">First Name</label>
+          <input name="name" type="text" ng-change="vm.bindName()" ng-model="vm.lecture.firstName" id="firstname" class="form-control input-sm" placeholder="First Name" required>
+          <div ng-messages="vm.form.lectureForm.firstname.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture firstname is required.</p>
+          </div>
+       </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="lastname">Last Name</label>
+          <input name="lastname" type="text" ng-change="vm.bindName()" ng-model="vm.lecture.lastName"  id="lastname" class="form-control input-sm" placeholder="Last Name" required>
+          <div ng-messages="vm.form.lectureForm.lastname.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture last name is required.</p>
+          </div>
+       </div>
+       
+         <div class="form-group" show-errors>
+          <label class="control-label" for="employeeId">Lecture ID</label>
+          <input name="employeeId" type="text" ng-model="vm.lecture.employeeId" id="employeeId" class="form-control input-sm" placeholder="Lecture ID" required>
+          <div ng-messages="vm.form.lectureForm.employeeId.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture Id is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="qualification">Qualification</label>
+          <select style="width:150px;" ng-options="sys as sys for sys in vm.qualification" placeholder="Select Qualification"
+                ng-model="vm.lecture.qualification" class="form-control input-sm" id="qualification" name="qualification">  
+          </select>   
+          <div ng-messages="vm.form.lectureForm.qualification.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture qualification is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="designation">Designation</label>
+          <input name="designation" type="text" ng-model="vm.lecture.designation" id="skills" class="form-control input-sm" placeholder="Designation" required>
+          <div ng-messages="vm.form.lectureForm.designation.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture designation is required.</p>
+          </div>
+        </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="skills">Skills</label>
+          <input name="skills" type="text" ng-model="vm.lecture.skills" id="skills" class="form-control input-sm" placeholder="Skills" required>
+          <div ng-messages="vm.form.lectureForm.skills.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture skills is required.</p>
+          </div>
+        </div>
+          <div class="form-group" show-errors>
+          <label class="control-label" for="email">E-Mail</label>
+          <input name="email" type="text" ng-model="vm.lecture.email" id="email" class="form-control input-sm" placeholder="E-Mail" required>
+          <div ng-messages="vm.form.lectureForm.email.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture email is required.</p>
+          </div>
+        </div>
+          <div class="form-group" show-errors>
+          <label class="control-label" for="contact">Contact</label>
+          <input name="contact" type="number" ng-model="vm.lecture.contact" id="contact" maxlength="10" minlength="10" ng-pattern="/^[0-9]{1,10}$/" class="form-control input-sm" placeholder="Contact" required>
+          <div ng-messages="vm.form.lectureForm.contact.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Lecture contact is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.lecture._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>        
+      </fieldset>
+    </form>
+  </div>
+</section>

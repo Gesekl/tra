@@ -1,0 +1,52 @@
+<section>
+  <div class="page-header">
+    <h2>{{vm.program._id ? 'Edit Program' : 'New Program'}}</h2>
+  </div>
+  <div class="col-md-3">
+    <form name="vm.form.programForm" class="form-horizontal" ng-submit="vm.save(vm.form.programForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Program Name</label>
+          <input name="name" type="text" ng-model="vm.program.name" id="name" class="form-control input-sm" placeholder="Name" required>
+          <div ng-messages="vm.form.programForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Program name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group" show-errors>
+          <label class="control-label" for="contact">Program Contact</label>
+          <input name="contact" type="text" ng-model="vm.program.contact" id="contact" class="form-control input-sm" placeholder="Contact" required>
+          <div ng-messages="vm.form.programForm.nacontactme.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Program Contact is required.</p>
+          </div>
+        </div>
+
+       <div class="form-group" show-errors>
+          <label class="control-label" for="email">Program E-Mail Contact</label>
+          <input name="email" type="email" ng-model="vm.program.email"  ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" id="email" class="form-control input-sm" placeholder="Program Person E-Mail Contact" required>
+             <div ng-messages="vm.form.programForm.email.$error" role="alert">
+              <p class="help-block error-text" ng-message="required">Program Email is required.</p> 
+              <p class="help-block error-text" ng-message="pattern">Please input a valid email.</p>          
+         
+            </div> 
+        </div>
+
+        <div class="form-group" show-errors>
+          <label class="control-label" for="fax">Program Fax</label>
+          <input name="fax" type="text" ng-model="vm.program.fax" id="fax" class="form-control input-sm" placeholder="Fax Number" required>
+          <div ng-messages="vm.form.programForm.fax.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Program Fax is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.program._id ? 'Update' : 'Create'}}</button>
+        </div>
+
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

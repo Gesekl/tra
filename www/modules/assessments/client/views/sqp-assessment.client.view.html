@@ -1,0 +1,32 @@
+<section>
+  <div class="page-header">
+    <h3> Assessment Question Papers</h3>
+    {{ vm.dd}}
+  </div>
+  <div class ="col-sm-3">
+  <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Subject</div>
+                   <select ng-options="assessment.name for  assessment in vm.assessments" 
+                  ng-model="vm.assessment" class="form-control input-sm" id="subject" name="subject" ng-change="vm.getSubject()">  
+                </select>                      
+             </div>                      
+          </div>
+     </div>
+
+  
+  <table class="table table-condensed">
+        <tr>
+            <th>Qusetion Paper</th>
+        <th></th>
+        </tr>
+        <tr ng-repeat="qp in vm.question">
+            <td>{{qp.ia}}</td>
+            <td>
+            <button class="btn btn-success" ng-click=" vm.getQP(qp)">Download</button>
+            </td>
+        </tr>
+
+    </table>               
+</section>
+ 

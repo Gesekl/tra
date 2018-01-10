@@ -1,0 +1,40 @@
+<section>
+  <div class="page-header">
+    <h3>My Assessment</h3>
+  </div>
+  <div class ="col-sm-3">
+  <div class="form-group" >
+             <div class="input-group">
+                <div class="input-group-addon">Subject</div>
+                   <select ng-options="assessment.name for  assessment in vm.assessments" 
+                  ng-model="vm.assessment" class="form-control input-sm" id="subject" name="subject" ng-change="vm.getSubject(vm.assessment)">  
+                </select>                      
+             </div>                      
+          </div>
+     </div>
+
+  
+   <table class="table table-condensed">
+    <thead>
+            <tr>
+      <th class="col-sm-1">Name</th>
+      <th class="col-sm-1">Subject Code</th>
+     
+      <th class="col-sm-1" ng-repeat=" ia in  vm.sub.IAs">{{ia.type}}</th>  
+                <th class="col-sm-1">
+                    Total
+                </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>  
+       <td>{{ vm.sub.name}}</td> 
+       <td>{{ vm.sub.scode}}</td> 
+        <td ng-repeat="mark in vm.sub.IAs"> {{mark.score}}</td>
+        <td>{{ vm.sub.tot}}</td>              
+ </tr> 
+      </tr>
+    </tbody>
+  </table>                       
+</section>
+ 

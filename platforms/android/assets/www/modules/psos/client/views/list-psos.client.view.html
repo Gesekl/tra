@@ -1,0 +1,26 @@
+<section>
+  <div class="page-header">
+    <h2>All PSO</h2>
+  </div>
+  <div class="form-group">
+      <input type="text" ng-model="pso" class="form-control input-sm" placeholder="Search PSO" />
+  </div>
+  <div class="list-group">    
+    <a ng-repeat="pso in vm.psos | orderBy: '_id' | filter: pso"
+       ui-sref="psos.edit({ psoId: pso._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="pso.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="pso.user" ng-bind="pso.user.displayName"></span>
+        <span ng-if="!pso.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="pso.name"></h4>
+       <span ng-bind="pso.description"></span>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.psos.$resolved && !vm.psos.length">
+    No PSO yet, why don't you <a ui-sref="psos.create">create one</a>?
+  </div>
+</section>

@@ -1,0 +1,31 @@
+     
+<!-- Sidebar Code Starts -->
+<div ng-controller="HeaderController" id="sidebar-wrapper">
+
+      <ul id="sidebar_menu" class="sidebar-nav">
+           <li class="sidebar-brand"><a id="menu-toggle" href="#">Track33<span id="main_icon" class="glyphicon glyphicon-align-justify"></span></a></li>
+      </ul>
+
+      <ul class="sidebar-nav" ng-if="menu.shouldRender(authentication.user);" id="sidebar">     
+         
+            <li class="dropdown"  uib-dropdown 
+                ng-repeat="item in menu.items | orderBy: 'position'"
+                ng-class="{ active: $state.includes(item.state), dropdown: item.type === 'dropdown' }" 
+                class="{{item.class}}"
+                ng-switch="item.type" 
+                ng-if="item.shouldRender(authentication.user);"
+                dropdown="item.type ==='dropdown'">
+                <a ng-switch-when="dropdown" class="dropdown-toggle" role="button" uib-dropdown-toggle >{{::item.title}}&nbsp;<span class="caret"></span></a>
+                <ul ng-switch-when="dropdown" class="dropdown-menu" role="menu">
+                    <li ng-repeat="subitem in item.items | orderBy: 'position'" 
+                    ng-if="subitem.shouldRender(authentication.user);" ui-sref-active="active">
+                    <a ui-sref="{{subitem.state}}" ng-bind="subitem.title"></a>
+                    </li>
+                </ul>
+                <a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>
+            </li>
+          
+   
+        </ul>
+</div>
+<!-- Sidebar Code Ends-->

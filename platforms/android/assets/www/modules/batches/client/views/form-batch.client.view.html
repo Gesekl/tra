@@ -1,0 +1,55 @@
+<section>
+  <div class="page-header">
+    <h3>{{vm.batch._id ? 'Edit Batch' : 'New Batch'}}</h3>
+  </div>
+  <div class="col-md-3">
+    <form name="vm.form.batchForm" class="form-horizontal" ng-submit="vm.save(vm.form.batchForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Batch Name</label>
+          <input name="name" type="text" ng-model="vm.batch.name" id="name" class="form-control input-sm" placeholder="Name" required>
+          <div ng-messages="vm.form.batchForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Batch name is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+         <label class="control-label" for="sdate">Start Date</label>
+         <input name="sdate" type="date" ng-model="vm.batch.sdate" id="sdate" class="form-control input-sm" placeholder="Start Date" required>
+         <div ng-messages="vm.form.batchForm.sdate.$error" role="alert">
+           <p class="help-block error-text" ng-message="required">Start Date is required.</p>
+         </div>
+       </div>
+        <div class="form-group" show-errors>
+         <label class="control-label" for="edate">End Date</label>
+         <input name="edate" type="date" ng-model="vm.batch.edate" id="edate" class="form-control input-sm" placeholder="End Date" required>
+         <div ng-messages="vm.form.batchForm.edate.$error" role="alert">
+           <p class="help-block error-text" ng-message="required">End Date is required.</p>
+         </div>
+       </div>
+        <div class="form-group" show-errors>
+         <label class="control-label" for="nor">Total Number Of Students</label>
+         <input name="nor" type="text" ng-model="vm.batch.nor" id="nor" class="form-control input-sm" placeholder="Total Number Of Students" required>
+         <div ng-messages="vm.form.batchForm.nor.$error" role="alert">
+           <p class="help-block error-text" ng-message="required">Total Number Of Students is required.</p>
+         </div>
+       </div>
+         <div class="form-group" show-errors>
+          <label class="control-label" for="system">System</label>
+          <select ng-options="sys as sys for sys in vm.systems" 
+                              ng-model="vm.batch.system" class="form-control input-sm" id="system" name="system">  
+          </select>  
+                  
+          <div ng-messages="vm.form.batchForm.system.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">System is required.</p>
+          </div>
+        </div>      
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-sm">{{vm.batch._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
